@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="./video-js-7.5.0/video-js.css">
+    <script src="./jquery-3.3.1.min.js"></script>
+    <script src="./video-js-7.5.0/video.js"></script>
+    <style>
+        /* 改变播放进度条的颜色 */
+        .vjs-matrix .vjs-big-play-button {
+            border-color: #00ff00;
+        }
+
+        .vjs-matrix .vjs-volume-level {
+            background: #00ff00;
+        }
+
+        .vjs-matrix .vjs-play-progress {
+            background: #00ff00;
+        }
+
+        .vjs-matrix .vjs-slider-bar {
+            background: #00ff00;
+        }
+
+        /* 改变所有控件的颜色 */
+        .vjs-matrix.video-js {
+
+            color: #2db7f5;
+        }
+
+        /* 将播放按钮改成圆形 */
+        .video-js .vjs-big-play-button {
+            font-size: 2.5em;
+            line-height: 2.3em;
+            height: 2.5em;
+            width: 2.5em;
+            -webkit-border-radius: 2.5em;
+            -moz-border-radius: 2.5em;
+            border-radius: 2.5em;
+            background-color: #73859f;
+            background-color: rgba(115, 133, 159, .5);
+            border-width: 0.15em;
+            margin-top: -1.25em;
+            margin-left: -1.75em;
+        }
+
+        /* 中间的播放箭头 */
+        .vjs-big-play-button .vjs-icon-placeholder {
+            font-size: 1.63em;
+        }
+
+        /* 加载圆圈 */
+        .vjs-loading-spinner {
+            font-size: 2.5em;
+            width: 2em;
+            height: 2em;
+            border-radius: 1em;
+            margin-top: -1em;
+            margin-left: -1.5em;
+        }
+
+
+        .video-js .vjs-time-control {
+            display: block;
+        }
+
+        .video-js .vjs-remaining-time {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <video class="vjs-matrix video-js vjs-default-skin vjs-big-play-centered" id="my-player" autoplay>
+    </video>
+</body>
+
+</html>
+<script>
+    var player = videojs('my-player', {
+        controls: true, //向用户显示控件，比如播放按钮
+        preload: 'auto', //视频结束后是否循环播放。
+        loop: true, //当媒介文件完成播放后再次开始播放。
+        height: 500,
+        width: 500,
+        // controlBar: {
+        //     captionsButton: false,
+        //     chaptersButton: false,
+        //     playbackRateMenuButton: true,
+        //     LiveDisplay: true,
+        //     subtitlesButton: false,
+        //     remainingTimeDisplay: true,
+
+        //     progressControl: true,
+
+        //     volumeMenuButton: {
+        //         inline: false,
+        //         vertical: true
+        //     }, //竖着的音量条
+        //     fullscreenToggle: true
+        // },
+        
+        // playbackRates: [0.5, 1, 1.5, 2],  //显示视频播放倍速
+
+        notSupportedMessage: '该视频无法播放，请重试',
+        
+
+    }, function () {
+
+        let newbtn = document.createElement('btn');
+        newbtn.innerHTML =
+            '<button class="vjs-control" id="back-btn"><i class="fa fa-fast-backward" title="快退"></i></button>' +
+            '<button class="vjs-control" id="move-btn"><i class="fa fa-fast-forward" title="快进"></i></button>';
+        let controlBar = document.getElementsByClassName('vjs-control-bar')[0];
+        let insertBeforeNode = document.getElementsByClassName('vjs-fullscreen-control')[0];
+        controlBar.insertBefore(newbtn, insertBeforeNode);
+
+        $('#back-btn').click(function () { //快退
+
+            player.currentTime(player.currentTime() - 0.500)
+        })
+        $('#move-btn').click(function () { //快进
+            player.currentTime(player.currentTime() + 0.500)
+
+
+        })
+        //删除不需要的节点
+        $('.vjs-seek-to-live-control.vjs-control.vjs-at-live-edge').next().remove()
+        $('.vjs-seek-to-live-control.vjs-control.vjs-at-live-edge').remove()
+
+        // $('.vjs-time-control.vjs-time-divider').remove()   
+        
+
+
+    })
+
+
+
+
+
+
+
+    player.src('./video/dad5ee1727db63eaf731063e13160ba0.mp4')
+
+    player.on('timeupdate', function () {
+        // console.log(player.currentTime())
+    });
+</script>
